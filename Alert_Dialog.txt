@@ -1,0 +1,87 @@
+package com.example.khalsa.alertdialog;
+
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+    Button b1,b2,b3;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        b1=findViewById(R.id.B1);
+        b2=findViewById(R.id.B2);
+        b3=findViewById(R.id.B3);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder a1=new AlertDialog.Builder(MainActivity.this);
+                a1.setMessage("The One with 1 Button");
+                a1.setTitle("ONE");
+                a1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        b1.setText("OK");
+                    }
+                });
+                AlertDialog ad1=a1.create();
+                ad1.show();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder a2=new AlertDialog.Builder(MainActivity.this);
+                a2.setMessage("The One with TWO Buttons");
+                a2.setTitle("TWO");
+                a2.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        b2.setText("YES");
+                    }
+                });
+                a2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        b2.setText("NO");
+                    }
+                });
+                AlertDialog ad2=a2.create();
+                ad2.show();
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder a3=new AlertDialog.Builder(MainActivity.this);
+                a3.setMessage("THe One with THREE Buttons");
+                a3.setTitle("THREE");
+                a3.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        b3.setText("YES");
+                    }
+                });
+                a3.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        b3.setText("NO");
+                    }
+                });
+                a3.setNeutralButton("UNSURE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        b3.setText("UNSURE");
+                    }
+                });
+                AlertDialog ad3=a3.create();
+                ad3.show();
+            }
+        });
+    }
+}
+

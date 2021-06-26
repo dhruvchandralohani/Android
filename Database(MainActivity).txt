@@ -1,0 +1,104 @@
+package com.example.khalsa.database;
+
+import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    DatabaseHelper mydb;
+    EditText n,sn,mr,id;
+    Button bt,va,up,d;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mydb=new DatabaseHelper(this);
+        n=findViewById(R.id.editText3);
+        sn=findViewById(R.id.editText4);
+        mr=findViewById(R.id.editText5);
+        id=findViewById(R.id.editText6);
+        bt=findViewById(R.id.button);
+        va=findViewById(R.id.button3);
+        up=findViewById(R.id.button2);
+        d=findViewById(R.id.button4);
+        AddData();
+        view();
+        update();
+        delete();
+    }
+    public void AddData(){
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isInserted=mydb.insertData(n.getText().toString(),sn.getText().toString(),mr.getText().toString());
+                if(isInserted){
+                    Toast.makeText(MainActivity.this, "Data Inserted!!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(MainActivity.this, "Data Not Inserted!!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+    public void view(){
+        va.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor c=mydb.getAllData();
+                if(c.getCount()==0){
+                    show("Error!","Not found");
+                    return;
+                }
+                StringBuffer buffer=new StringBuffer();
+                while(c.moveToNext()){
+                    buffer.append("Id: "+c.getString(0)+"\n");   // 0 is index of COL0
+                    buffer.append("Name: "+c.getString(1)+"\n");   // 1 is index of COL1
+                    buffer.append("Surname: "+c.getString(2)+"\n");   // 2 is index of COL2
+                    buffer.append("MArks: "+c.getString(3)+"\n");   // 3 is index of COL3
+                    show("Data",buffer.toString());
+                }
+            }
+        });
+    }
+    public void show(String Title,String message){
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(Title);
+        builder.setMessage(message);
+        builder.show();
+    }
+    public void update(){
+        up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isupdated=mydb.updatedata(id.getText().toString(),n.getText().toString(),sn.getText().toString(),mr.getText().toString());
+
+                if(isupdated==true){
+
+                    show("Info","data Updated");
+                }
+            }
+        });
+    }
+    public void delete(){
+        d.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer deletedrows=mydb.deleteData(id.getText().toString());
+                if(deletedrows>0)
+                {
+                    Toast.makeText(MainActivity.this,"Data Deleted",Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(MainActivity.this,"Data Not Deleted",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+}
+

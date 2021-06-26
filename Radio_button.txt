@@ -1,0 +1,34 @@
+package com.example.khalsa.radiobuttons;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
+    View v1;
+    RadioGroup rg;
+    RadioButton rb;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        rg=findViewById(R.id.radio);
+        rg.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        rb=findViewById(checkedId);
+        v1=getWindow().getDecorView();
+        String text=rb.getText().toString();
+        if(text.compareTo("RED")==0)
+            v1.setBackgroundResource(R.color.colorPrimaryDark);
+        if(text.compareTo("GREEN")==0)
+            v1.setBackgroundResource(R.color.colorPrimary);
+        if(text.compareTo("BLUE")==0)
+            v1.setBackgroundResource(R.color.colorAccent);
+    }
+}
+
